@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Advisor by AI - Resume Builder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css">
+    <!-- Add html2pdf and html2canvas libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Basic page styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .hero {
+            background-image: linear-gradient(to bottom, #33ccff, #99ffff);
+            padding: 150px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Resume preview styles */
+        #generated-resume {
+            width: 21.59cm;
+            min-height: 27.94cm;
+            margin: 0 auto;
+            padding: 2.54cm;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.3;
+            color: #000;
+        }
+
+        .section-heading {
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            margin-bottom: 0.5cm;
+            padding-bottom: 0.1cm;
+            font-weight: bold;
+            font-size: 12pt;
+            letter-spacing: 0.5px;
+        }
+
+        .name {
+            text-align: center;
+            font-size: 24pt;
+            margin-bottom: 0.2cm;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .location {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 0.2cm;
+            font-size: 11pt;
+            color: #333;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 0.8cm;
+            font-size: 11pt;
+        }
+
+        .contact-info a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .education-item {
+            margin-bottom: 0.4cm;
+        }
+
+        .education-item .institution {
+            font-weight: bold;
+            font-size: 11pt;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .education-item .degree {
+            font-style: italic;
+            font-size: 11pt;
+            margin-top: 0.1cm;
+        }
+
+        .education-item .location {
+            text-align: right;
+            font-style: italic;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.3cm;
+            margin-bottom: 0.5cm;
+        }
+
+        .skill-item {
+            font-size: 11pt;
+            position: relative;
+            padding-left: 0.4cm;
+        }
+
+        .skill-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+        }
+
+        .project-item {
+            margin-bottom: 0.4cm;
+        }
+
+        .project-item .title {
+            font-weight: bold;
+            font-size: 11pt;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .project-item .description {
+            margin-left: 0.5cm;
+            font-size: 11pt;
+            position: relative;
+        }
+
+        .project-item .description:before {
+            content: "•";
+            position: absolute;
+            left: -0.5cm;
+        }
+
+        .download-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background-color: #218838;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #generated-resume, #generated-resume * {
+                visibility: visible;
+            }
+            #generated-resume {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: 0;
+                padding: 2.54cm;
+            }
+            @page {
+                size: A4;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Career Advisor by AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="resume-builder.html">Resume Builder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#chat">AI Career Advisor</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Career Advisor by AI</h1>
+        <p>Get personalized career suggestions based on your interests</p>
+    </div>
+
+    <div class="container">
+        <h2>Build Your Resume</h2>
+        <div class="resume-container">
+            <form id="resume-form">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="phone" required>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" required>
+                </div>
+                <div class="mb-3">
+                    <label for="linkedin" class="form-label">LinkedIn URL</label>
+                    <input type="url" class="form-control" id="linkedin" placeholder="https://linkedin.com/in/yourusername">
+                </div>
+                <div class="mb-3">
+                    <label for="github" class="form-label">GitHub URL</label>
+                    <input type="url" class="form-control" id="github" placeholder="https://github.com/yourusername">
+                </div>
+
+                <div class="mb-3">
+                    <label for="overview" class="form-label">Professional Overview</label>
+                    <textarea class="form-control" id="overview" rows="3" placeholder="Brief summary of your professional background and career objectives"></textarea>
+                </div>
+                
+                <h5 class="section-title">Education</h5>
+                <div id="education-entries">
+                    <div class="education-entry mb-3">
+                        <div class="mb-2">
+                            <label class="form-label" for="edu-institution">Institution</label>
+                            <input type="text" class="form-control" id="edu-institution" name="education-institution[]" placeholder="e.g., Harvard University">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label" for="edu-degree">Degree/Program</label>
+                            <input type="text" class="form-control" id="edu-degree" name="education-degree[]" placeholder="e.g., Bachelor of Science in Computer Science">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Duration</label>
+                            <input type="text" class="form-control" name="education-duration[]" placeholder="e.g., 2020-2024">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">GPA/Score</label>
+                            <input type="text" class="form-control" name="education-score[]" placeholder="e.g., CGPA: 8.5">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-control" name="education-location[]" placeholder="e.g., New York, NY">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary mb-3" onclick="addEducationEntry()">
+                    <i class="fas fa-plus"></i> Add More Education
+                </button>
+
+                <h5 class="section-title">Experience</h5>
+                <div id="experience-entries">
+                    <div class="experience-entry mb-3">
+                        <div class="mb-2">
+                            <label class="form-label" for="exp-company">Company</label>
+                            <input type="text" class="form-control" id="exp-company" name="experience-company[]" placeholder="e.g., Google Inc.">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label" for="exp-position">Position</label>
+                            <input type="text" class="form-control" id="exp-position" name="experience-position[]" placeholder="e.g., Software Engineer">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Duration</label>
+                            <input type="text" class="form-control" name="experience-duration[]" placeholder="e.g., June 2020 - Present">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Responsibilities</label>
+                            <textarea class="form-control" name="experience-responsibilities[]" rows="3" placeholder="Enter each responsibility on a new line"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary mb-3" onclick="addExperienceEntry()">
+                    <i class="fas fa-plus"></i> Add More Experience
+                </button>
+
+                <h5 class="section-title">Projects</h5>
+                <div id="project-entries">
+                    <div class="project-entry mb-3">
+                        <div class="mb-2">
+                            <label class="form-label" for="proj-name">Project Name</label>
+                            <input type="text" class="form-control" id="proj-name" name="project-name[]" placeholder="e.g., E-commerce Website">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">GitHub Link</label>
+                            <input type="url" class="form-control" name="project-github[]" placeholder="https://github.com/yourusername/project">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="project-description[]" rows="3" placeholder="Describe your project"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Technologies Used</label>
+                            <input type="text" class="form-control" name="project-tech[]" placeholder="e.g., Python, React, MongoDB">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary mb-3" onclick="addProjectEntry()">
+                    <i class="fas fa-plus"></i> Add More Projects
+                </button>
+
+                <h5 class="section-title">Skills</h5>
+                <div class="mb-3">
+                    <label for="programming" class="form-label">Programming Languages</label>
+                    <input type="text" class="form-control" id="programming" placeholder="e.g., C++, Java, Python">
+                </div>
+                <div class="mb-3">
+                    <label for="tools" class="form-label">Developer Tools</label>
+                    <input type="text" class="form-control" id="tools" placeholder="e.g., Git, VS Code, Docker">
+                </div>
+                <div class="mb-3">
+                    <label for="frameworks" class="form-label">Frameworks</label>
+                    <input type="text" class="form-control" id="frameworks" placeholder="e.g., React, Node.js, Django">
+                </div>
+                <div class="mb-3">
+                    <label for="databases" class="form-label">Databases</label>
+                    <input type="text" class="form-control" id="databases" placeholder="e.g., MongoDB, MySQL, PostgreSQL">
+                </div>
+                <div class="mb-3">
+                    <label for="soft-skills" class="form-label">Soft Skills</label>
+                    <input type="text" class="form-control" id="soft-skills" placeholder="e.g., Leadership, Communication, Problem Solving">
+                </div>
+
+                <h5 class="section-title">Achievements</h5>
+                <div class="mb-3">
+                    <label for="achievements" class="form-label">List Your Achievements</label>
+                    <textarea class="form-control" id="achievements" rows="4" placeholder="Enter each achievement on a new line"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-file-alt"></i> Generate Resume
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Your Resume</h2>
+        <div id="generated-resume">
+            <!-- Resume content will be dynamically inserted here -->
+        </div>
+        <div class="text-center mt-4" id="download-buttons" style="display: none;">
+            <button onclick="downloadResume('pdf')" class="btn btn-primary mx-1">
+                <i class="fas fa-file-pdf"></i> Download PDF
+            </button>
+            <button onclick="downloadResume('image')" class="btn btn-success mx-1">
+                <i class="fas fa-image"></i> Download Image
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Career Advisor by AI Build by Rishi</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('resume-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Get form values
+            const name = document.getElementById('name').value.toUpperCase();
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const location = document.getElementById('location').value;
+            const linkedin = document.getElementById('linkedin').value;
+            const github = document.getElementById('github').value;
+
+            // Get education entries
+            const educationEntries = Array.from(document.querySelectorAll('.education-entry')).map(entry => ({
+                institution: entry.querySelector('input[name="education-institution[]"]').value,
+                degree: entry.querySelector('input[name="education-degree[]"]').value,
+                duration: entry.querySelector('input[name="education-duration[]"]').value,
+                score: entry.querySelector('input[name="education-score[]"]').value,
+                location: entry.querySelector('input[name="education-location[]"]') ? entry.querySelector('input[name="education-location[]"]').value : ''
+            }));
+
+            // Get experience entries
+            const experienceEntries = Array.from(document.querySelectorAll('.experience-entry')).map(entry => ({
+                company: entry.querySelector('input[name="experience-company[]"]').value,
+                position: entry.querySelector('input[name="experience-position[]"]').value,
+                duration: entry.querySelector('input[name="experience-duration[]"]').value,
+                responsibilities: entry.querySelector('textarea[name="experience-responsibilities[]"]').value
+            }));
+
+            // Get project entries
+            const projectEntries = Array.from(document.querySelectorAll('.project-entry')).map(entry => ({
+                name: entry.querySelector('input[name="project-name[]"]').value,
+                github: entry.querySelector('input[name="project-github[]"]').value,
+                description: entry.querySelector('textarea[name="project-description[]"]').value,
+                tech: entry.querySelector('input[name="project-tech[]"]').value,
+                duration: '' // Adding duration property as it's referenced in the template
+            }));
+
+            // Get skills
+            const programming = document.getElementById('programming').value;
+            const tools = document.getElementById('tools').value;
+            const frameworks = document.getElementById('frameworks').value;
+            const databases = document.getElementById('databases').value;
+            const softSkills = document.getElementById('soft-skills').value;
+
+            // Generate resume HTML
+            const resumeHTML = `
+                <div class="name">${name}</div>
+                <div class="location">${location}</div>
+                <div class="contact-info">
+                    ☎ +${phone} | ✉ ${email} | 
+                    ${linkedin ? `<a href="${linkedin}" target="_blank">in/${linkedin.split('/').pop()}</a> |` : ''}
+                    ${github ? `<a href="${github}" target="_blank">github/${github.split('/').pop()}</a>` : ''}
+                </div>
+
+                <div class="section-heading">EDUCATION</div>
+                ${educationEntries.map(edu => `
+                    <div class="education-item">
+                        <div class="institution">
+                            ${edu.institution}
+                            <span>${edu.duration}</span>
+                        </div>
+                        <div class="degree">${edu.degree}${edu.score ? ` - ${edu.score}` : ''}</div>
+                        ${edu.location ? `<div class="location">${edu.location}</div>` : ''}
+                    </div>
+                `).join('')}
+
+                <div class="section-heading">COURSEWORK / SKILLS</div>
+                <div class="skills-grid">
+                    <div class="skill-item">Data Structures & Algorithms</div>
+                    <div class="skill-item">Network Security</div>
+                    <div class="skill-item">Operating Systems</div>
+                    <div class="skill-item">Database Management System (DBMS)</div>
+                    <div class="skill-item">Artificial Intelligence</div>
+                    <div class="skill-item">OOPS Concept</div>
+                    <div class="skill-item">Web Development</div>
+                    <div class="skill-item">Android Development</div>
+                </div>
+
+                <div class="section-heading">PROJECTS</div>
+                ${projectEntries.map(proj => `
+                    <div class="project-item">
+                        <div class="title">
+                            ${proj.name} ${proj.github ? `<a href="${proj.github}" target="_blank">↗</a>` : ''}
+                            <span>${proj.duration || ''}</span>
+                        </div>
+                        <div class="description">${proj.tech || ''}</div>
+                        ${proj.description ? `<div class="description">${proj.description}</div>` : ''}
+                    </div>
+                `).join('')}
+
+                <div class="section-heading">INTERNSHIP</div>
+                ${experienceEntries.map(exp => `
+                    <div class="project-item">
+                        <div class="title">
+                            ${exp.company} ${exp.github ? `<a href="${exp.github}" target="_blank">↗</a>` : ''}
+                            <span>${exp.duration || ''}</span>
+                        </div>
+                        <div class="degree">${exp.position || ''}</div>
+                        ${exp.responsibilities ? exp.responsibilities.split('\n').map(resp => 
+                            resp.trim() ? `<div class="description">${resp.trim()}</div>` : ''
+                        ).join('') : ''}
+                    </div>
+                `).join('')}
+
+                <div class="section-heading">TECHNICAL SKILLS</div>
+                <div style="margin-bottom: 0.3cm;">
+                    <div class="skill-item">Languages: ${programming}</div>
+                    <div class="skill-item">Developer Tools: ${tools}</div>
+                    <div class="skill-item">Technologies/Frameworks: ${frameworks}</div>
+                </div>
+
+                <div class="section-heading">CERTIFICATIONS</div>
+                <div class="skills-grid">
+                    <div class="skill-item">ReactJS & Redux - Udemy</div>
+                    <div class="skill-item">Java</div>
+                    <div class="skill-item">Python for Data Science - XIE</div>
+                    <div class="skill-item">SQL</div>
+                    <div class="skill-item">5 Stars in C++ & SQL</div>
+                    <div class="skill-item">MongoDB Basics</div>
+                    <div class="skill-item">Command Line in Linux - Coursera</div>
+                    <div class="skill-item">NodeJS with Express & MongoDB - Udemy</div>
+                </div>
+            `;
+
+            // Update preview and show download buttons
+            document.getElementById('generated-resume').innerHTML = resumeHTML;
+            document.getElementById('download-buttons').style.display = 'block';
+            
+            // Scroll to the resume preview
+            document.getElementById('generated-resume').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function downloadResume(format) {
+            const element = document.getElementById('generated-resume');
+            const name = document.getElementById('name').value;
+            const fileName = `${name.toLowerCase().replace(/\s+/g, '_')}_resume`;
+
+            if (format === 'pdf') {
+                const opt = {
+                    margin: 0,
+                    filename: `${fileName}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { 
+                        scale: 2,
+                        useCORS: true,
+                        letterRendering: true
+                    },
+                    jsPDF: { 
+                        unit: 'cm', 
+                        format: 'a4', 
+                        orientation: 'portrait' 
+                    }
+                };
+                html2pdf().set(opt).from(element).save();
+            } else if (format === 'image') {
+                html2canvas(element, {
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `${fileName}.png`;
+                    link.href = canvas.toDataURL('image/png/pdf');
+                    link.click();
+                });
+            }
+        }
+
+        function addEducationEntry() {
+            const container = document.getElementById('education-entries');
+            const entry = container.children[0].cloneNode(true);
+            // Clear the input values
+            entry.querySelectorAll('input').forEach(input => input.value = '');
+            container.appendChild(entry);
+        }
+
+        function addExperienceEntry() {
+            const container = document.getElementById('experience-entries');
+            const entry = container.children[0].cloneNode(true);
+            // Clear the input values
+            entry.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            container.appendChild(entry);
+        }
+
+        function addProjectEntry() {
+            const container = document.getElementById('project-entries');
+            const entry = container.children[0].cloneNode(true);
+            // Clear the input values
+            entry.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            container.appendChild(entry);
+        }
+    </script>
+</body>
+</html> 

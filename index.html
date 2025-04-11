@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Website by AI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/resume-builder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Career Website by AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#career-guidance">Career Guidance</a></li>
+                <li><a href="#skill-analysis">Skill Analysis</a></li>
+                <li><a href="#job-market">Job Market</a></li>
+                <li><a href="#resume-builder.html">Build Your Resume</a></li>
+                <li><a href="#interview">Interview Prep</a></li>
+                <li><a href="#mentorship">Mentorship</a></li>
+                <li><a href="chatbot.html">AI Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Your AI-Powered Career Companion</h1>
+            <p>Get personalized career guidance, skill analysis, and professional development tools</p>
+            <h3>Uplode your Resume and get your Recommended  improvement and recommended Job </h3>
+            <div class="hero-buttons">
+                <div class="get-action">
+                    <a href="get.html" class="action-button">
+                        <i class="fas fa-plus-circle"></i>
+                        get started
+                    </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Guidance Section -->
+    <section id="career-guidance" class="section">
+        <h2>Personalized Career Guidance</h2>
+        <div class="career-form">
+            <form id="career-assessment">
+                <div class="form-group">
+                    <label for="skills">Your Skills</label>
+                    <input type="text" id="skills" placeholder="Enter your skills (comma-separated)">
+                </div>
+                <div class="form-group">
+                    <label for="interests">Your Interests</label>
+                    <input type="text" id="interests" placeholder="Enter your interests (comma-separated)">
+                </div>
+                <div class="form-group">
+                    <label for="goals">Career Goals</label>
+                    <textarea id="goals" placeholder="Describe your career goals"></textarea>
+                </div>
+                <button type="submit">Get Recommendations</button>
+            </form>
+        </div>
+        <div id="recommendations" class="recommendations"></div>
+    </section>
+
+    <!-- Skill Analysis Section -->
+    <section id="skill-analysis" class="section">
+        <h2>Skill Gap Analysis</h2>
+        <div class="skill-assessment">
+            <div class="current-skills">
+                <h3>Your Current Skills</h3>
+                <div id="skill-list"></div>
+            </div>
+            <div class="skill-gaps">
+                <h3>Recommended Improvements</h3>
+                <div id="gap-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Market Section -->
+    <section id="job-market" class="section">
+        <h2>Real-Time Job Market Insights</h2>
+        <div class="market-insights">
+            <div class="trends">
+                <h3>Current Trends</h3>
+                <div id="trend-list"></div>
+            </div>
+            <div class="in-demand">
+                <h3>In-Demand Skills</h3>
+                <div id="demand-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Builder Section -->
+    <section id="resume" class="section">
+        <h2>AI-Powered Resume Builder</h2>
+        <div class="resume-builder-preview">
+            <div class="resume-features">
+                <div class="feature-box">
+                    <i class="fas fa-magic"></i>
+                    <h3>Smart Formatting</h3>
+                    <p>AI-powered formatting that follows industry best practices</p>
+                </div>
+                <div class="feature-box template-preview-box">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Resume Templates</h3>
+                    <p>Choose from professionally designed templates</p>
+                    <button class="preview-btn" onclick="showTemplatePreview()">
+                       <!--  <i class="fas fa-eye"> --></i> View Templates
+                    </button>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>ATS Friendly</h3>
+                    <p>Optimized for Applicant Tracking Systems</p>
+                </div>
+            </div>
+            <div class="resume-action">
+                <a href="resume-builder.html" class="action-button">
+                    <i class="fas fa-plus-circle"></i>
+                    Create Your Resume
+                </a>
+                <p class="feature-text">Build a professional resume in minutes</p>
+            </div>
+        </div>
+
+        <!-- Template Preview Modal -->
+        <div id="templateModal" class="template-modal">
+            <div class="template-modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Professional Resume Templates</h3>
+                <div class="template-preview">
+                    <div class="template-showcase">
+                        <img src="images/22525.png.png" alt="Professional Resume Template" class="template-image">
+                        <div class="template-navigation">
+                            <button class="template-nav prev">&#10094;</button>
+                            <div class="template-counter">Template 1 of 4</div>
+                            <button class="template-nav next">&#10095;</button>
+                        </div>
+                    </div>
+                    <div class="template-details">
+                        <h4>Professional Technical Resume</h4>
+                        <p class="template-description">Clean and modern design perfect for technical roles</p>
+                        <div class="template-features">
+                            <h5>Template Features:</h5>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Perfect for technical and professional roles</li>
+                                <li><i class="fas fa-check"></i> Clear section organization</li>
+                                <li><i class="fas fa-check"></i> ATS-friendly formatting</li>
+                                <li><i class="fas fa-check"></i> Easy to read typography</li>
+                                <li><i class="fas fa-check"></i> Optimized for readability</li>
+                                <li><i class="fas fa-check"></i> Professional formatting</li>
+                            </ul>
+                        </div>
+                        <div class="template-actions">
+                            <a href="resume-builder.html" class="primary">
+                                <i class="fas fa-plus"></i> Use This Template
+                            </a>
+                            <button class="secondary">
+                                <i class="fas fa-eye"></i> Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interview Preparation Section -->
+    <section id="interview" class="section">
+        <h2>AI-Powered Interview Preparation</h2>
+        <div class="interview-prep">
+            <div class="mock-interview">
+                <h3>Start Mock Interview</h3>
+                <button id="start-interview">Begin Interview</button>
+            </div>
+            <div id="interview-questions" class="interview-questions"></div>
+            <div id="feedback" class="feedback"></div>
+        </div>
+    </section>
+
+    <!-- Mentorship Section -->
+    <section id="mentorship" class="section">
+        <h2>Find Your Mentor</h2>
+        <div class="mentorship-matching">
+            <form id="mentor-form">
+                <div class="form-group">
+                    <label for="mentor-field">Desired Field</label>
+                    <input type="text" id="mentor-field" required>
+                </div>
+                <div class="form-group">
+                    <label for="mentor-experience">Experience Level</label>
+                    <select id="mentor-experience" required>
+                        <option value="entry">Entry Level</option>
+                        <option value="mid">Mid Level</option>
+                        <option value="senior">Senior Level</option>
+                    </select>
+                </div>
+                <button type="submit">Find Mentor</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- AI Chat Section -->
+    <section id="chat" class="section">
+        <h2>AI Career Chatbot</h2>
+        <div class="chat-container">
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot">
+                    <div class="message-content">
+                        Hello! I'm your AI career assistant. How can I help you today?
+                    </div>
+                </div>
+            </div>
+            <div class="typing-indicator" id="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Ask your career-related question...">
+                <button id="send-message">Ask</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Career Website by AI - Your trusted partner in career development</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#career-guidance">Career Guidance</a></li>
+                    <li><a href="#skill-analysis">Skill Analysis</a></li>
+                    <li><a href="#job-market">Job Market</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: support@careerwebsite.ai</p>
+                <p>Phone: +91 9709323310</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Developed by Rishi Kumar Singh</a></p>
+            <p>Developer Email: rishikumarsingh444@gmail.com</a></p>
+            <p>&copy; 2025 Career Website by AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Chatbot styles */
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border: 1px solid #eaeaea;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin: 12px 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message.user {
+            text-align: right;
+        }
+        .message.bot {
+            text-align: left;
+        }
+        .message-content {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        .message.user .message-content {
+            background-color: #5e61f5;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        .message.bot .message-content {
+            background-color: #f0f2f5;
+            color: #333;
+            border-bottom-left-radius: 5px;
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        .chat-input input:focus {
+            outline: none;
+            border-color: #5e61f5;
+        }
+        .chat-input button {
+            padding: 0 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #5e61f5;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .chat-input button:hover {
+            background-color: #4548e2;
+        }
+        .chat-input button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .typing-indicator {
+            display: none;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background-color: #bbb;
+            margin-right: 3px;
+            animation: typing 1s infinite;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 15px;
+                padding: 15px;
+            }
+            .chat-messages {
+                height: 350px;
+            }
+            .message-content {
+                max-width: 90%;
+            }
+        }
+        @media (max-width: 480px) {
+            .chat-container {
+                margin: 10px;
+                padding: 10px;
+            }
+            .chat-messages {
+                height: 300px;
+            }
+        }
+    </style>
+
+    <script>
+        // Template Modal functionality
+        const modal = document.getElementById('templateModal');
+        const closeBtn = document.getElementsByClassName('close-modal')[0];
+
+        function showTemplatePreview() {
+            modal.style.display = "block";
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Career chatbot functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Groq API configuration
+            const API_KEY = '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';
+            const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+            const sendButton = document.getElementById('send-message');
+            const userInput = document.getElementById('user-input');
+            
+            // Handle Enter key press for chat
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendButton.click();
+                }
+            });
+
+            sendButton.addEventListener('click', async function() {
+                const messageText = userInput.value;
+                if (!messageText.trim()) return; // Don't send empty messages
+                
+                // Display the user's message in the chat window
+                addMessage(messageText, 'user');
+
+                // Clear the input field
+                userInput.value = '';
+                
+                // Disable send button and show typing indicator
+                sendButton.disabled = true;
+                document.getElementById('typing-indicator').style.display = 'block';
+
+                try {
+                    // Call the Groq API directly
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${API_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            model: "llama3-70b-8192",
+                            messages: [
+                                {
+                                    role: "system",
+                                    content: "You are a helpful career and professional development assistant. Provide clear, helpful advice on job searching, resume building, interviewing, and career advancement."
+                                },
+                                {
+                                    role: "user",
+                                    content: messageText
+                                }
+                            ],
+                            temperature: 0.7,
+                            max_tokens: 1024
+                        })
+                    });
+
+                    // Process the response
+                    const data = await response.json();
+                    
+                    // Hide typing indicator and enable send button
+                    document.getElementById('typing-indicator').style.display = 'none';
+                    sendButton.disabled = false;
+
+                    if (response.ok) {
+                        const botReply = data.choices[0].message.content;
+                        addMessage(botReply, 'bot');
+                    } else {
+                        // Handle API error
+                        addMessage(`Error: ${data.error?.message || 'Something went wrong'}`, 'bot');
+                    }
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                    addMessage('Sorry, something went wrong. Please try again later.', 'bot');
+                    
+                    // Hide typing indicator and enable send button
+                    document.getElementById('typing-indicator').style.display = 'none';
+                    sendButton.disabled = false;
+                }
+            });
+
+            // Function to add a message to the chat window
+            function addMessage(message, sender) {
+                const chatMessages = document.getElementById('chat-messages');
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', sender);
+                messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
+                chatMessages.appendChild(messageDiv);
+
+                // Scroll to the bottom of the chat window
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+    </script>
+
+    <script src="js/main.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/career-guidance.js"></script>
+    <script src="js/skill-analysis.js"></script>
+    <script src="js/interview-prep.js"></script>
+    <script src="js/mentorship.js"></script>
+    <script src="js/template-images.js"></script>
+</body>
+</html> 
